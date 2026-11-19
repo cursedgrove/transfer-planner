@@ -785,7 +785,7 @@ html[data-theme=dark] input,html[data-theme=dark] select,html[data-theme=dark] t
 <footer class="sitefoot"><div class="fw">
   <div class="fbrand"><b>Academic Planning Portal</b><br><span class="tonly">A personal transfer and degree planning tool for MJC students.</span><span class="fyonly">A personal planning tool for high school students applying to CSU and UC.</span><div class="flinks"><a href="https://assist.org/" target="_blank" rel="noopener">ASSIST.org</a><a href="https://www.calstate.edu/apply" target="_blank" rel="noopener">Cal State Apply</a><a href="https://admission.universityofcalifornia.edu/" target="_blank" rel="noopener">UC Admissions</a></div></div>
   <div class="tonly">Course data: MJC Cal-GETC &amp; CSU GE course lists, MJC class schedule, SJSU/CVC articulation pages. Unit counts marked “est.” are unconfirmed.</div>
-  <div>This is not an official Modesto Junior College or YCCD system. Always confirm your plan with an MJC counselor and ASSIST.org.</div>
+  <div>Not an official MJC system. Confirm your plan with a counselor.</div>
 </div></footer>
 
 <div class="scrim" id="scrim"><div class="modal" id="modal"></div></div>
@@ -819,8 +819,8 @@ function toggleUser(e){e.stopPropagation();document.querySelector(".umenu").clas
 document.addEventListener("click",()=>{const m=document.querySelector(".umenu");if(m)m.classList.remove("open")});
 function openHelp(){modal(`<h3>Help &amp; shortcuts</h3>
   <table class="keys"><tbody><tr><td><kbd>Ctrl</kbd> <kbd>K</kbd></td><td>Search pages, your courses, the catalog and degrees</td></tr><tr><td><kbd>Ctrl</kbd> <kbd>Z</kbd></td><td>Undo the last change</td></tr><tr><td><kbd>Esc</kbd></td><td>Close a window</td></tr></tbody></table>
-  <p style="color:var(--sub)">Start by importing your unofficial transcript (Settings or My Courses), then choose your degree. The Degree Audit, Standing and Plans pages update automatically.</p>
-  <p style="color:var(--sub)">This is a personal planning tool, not an official MJC system. Confirm your plan with an MJC counselor and on ASSIST.org.</p>
+  <p style="color:var(--sub)">Import your transcript, then choose your degree. Everything else updates automatically.</p>
+  <p style="color:var(--sub)">Not an official MJC system. Confirm your plan with a counselor.</p>
   <div class="mfoot"><button class="btn pri" onclick="closeModal()">Got it</button></div>`)}
 
 /* ---------- constants ---------- */
@@ -1477,7 +1477,7 @@ function vEdPlan(){
     </tbody></table>
     <div class="sect">* * * TRANSFER READINESS (CSU ADT) * * *</div>
     <table class="tx small"><colgroup><col style="width:6%"><col style="width:36%"><col></colgroup><tbody>${ready.map(x=>`<tr><td>${x.s==="ok"?"[X]":x.s==="wait"?"[~]":"[ ]"}</td><td>${x.label}</td><td>${x.detail.replace(/ ✓/g," OK").replace(/ …/g," --")}</td></tr>`).join("")}</tbody></table>
-    <div class="pfoot">Code R = repeated course, excluded from GPA, W = withdrawal, NP = no pass, Planned terms show attempted units only.<br>This is a personal planning document. It is not an official MJC transcript or education plan. Verify with an MJC counselor.</div>
+    <div class="pfoot">Code R = repeated course, excluded from GPA, W = withdrawal, NP = no pass, Planned terms show attempted units only.<br>Personal planning document, not an official MJC record. Verify with a counselor.</div>
   </div>`;
 }
 function edPlanText(){
@@ -1557,7 +1557,7 @@ function vWhatIf(){
       need+=g.need;have+=h2;done+=d2}
     return {d,need,have,done,pct:need?Math.round(have/need*100):0,dpct:need?Math.round(done/need*100):0}}).sort((a,b)=>b.pct-a.pct||b.dpct-a.dpct||a.d.name.localeCompare(b.d.name));
   return `<div class="card">
-  <div class="note" style="margin:0 0 12px">Each bar shows how many of a degree's required major courses you've already taken or planned. Dark = completed, light = in progress or planned. Cal-GETC applies to every transfer degree, so it isn't counted here.</div>
+  <div class="note" style="margin:0 0 12px">Major courses taken (dark) or planned (light) for each degree. Cal-GETC isn't counted.</div>
   <table class="wif"><thead><tr><th>Degree</th><th style="width:44%">Major courses you already have</th><th class="n" style="width:80px">Match</th><th style="width:170px"></th></tr></thead><tbody>
   ${rows.map(x=>`<tr${state.settings.degreeId===x.d.id?' class="cur"':""}><td><b>${esc(x.d.name)}</b> <span class="tag ${x.d.type==="AA-T"?"plan":"ok"}">${x.d.type}</span>${state.settings.degreeId===x.d.id?' <span class="tag prog">current</span>':""}</td>
     <td><div class="meter sm"><i style="width:${x.dpct}%"></i><i class="ip" style="width:${x.pct-x.dpct}%"></i></div><div class="dn">${x.have} of ${x.need} courses${x.done?`, ${x.done} completed`:""}</div></td>
@@ -1568,7 +1568,7 @@ function vWhatIf(){
 /* ---------- Transcript import (MJC unofficial transcript: upload PDF or paste text) ---------- */
 function openImport(){
   modal(`<h3>Import your MJC transcript</h3>
-  <p style="color:var(--sub);margin-top:-4px">Upload your unofficial transcript PDF from the MJC portal, or open it, select all, copy, and paste the text below. Courses, terms, units and grades are read in. Personal details (address, SSN, birth date) are ignored and never saved.</p>
+  <p style="color:var(--sub);margin-top:-4px">Upload your MJC unofficial transcript PDF or paste its text. Personal details are never saved.</p>
   <div class="row" style="margin-bottom:10px"><label class="btn pri" style="display:inline-block">Choose transcript PDF<input type="file" accept="application/pdf,.pdf,.txt" style="display:none" onchange="importFile(this)"></label><span class="dn" id="impStatus"></span></div>
   <textarea id="impText" style="min-height:180px;font-family:'JetBrains Mono',monospace;font-size:12px" placeholder="…or paste transcript text here"></textarea>
   <div class="mfoot"><button class="btn pri" onclick="previewImport(document.getElementById('impText').value)">Read transcript</button><button class="btn" onclick="closeModal()">Cancel</button></div>`);
@@ -1581,7 +1581,7 @@ async function pdfToText(buf){const lib=await loadPdfJs();const doc=await lib.ge
   return out.join("\n")}
 async function importFile(inp){const f=inp.files[0];if(!f)return;const st=document.getElementById("impStatus");st.textContent="Reading…";
   try{const txt=f.type==="application/pdf"||/\.pdf$/i.test(f.name)?await pdfToText(await f.arrayBuffer()):await f.text();document.getElementById("impText").value=txt;st.textContent="";previewImport(txt)}
-  catch(e){st.textContent="Couldn't read that PDF here. Open it, copy all the text and paste it in the box instead."}}
+  catch(e){st.textContent="Couldn't read that PDF. Paste the text instead."}}
 function parseTranscript(txt){
   const out=[];let term="";
   const subjects=new Set(SUBJECTS.concat(["STAT","POLS","PSYC","ARTH","ANTH","ASTR","BIOL","CDEV","SOCI","SWHS"]));
@@ -1682,7 +1682,7 @@ function vStanding(){
     ${row("Units attempted (graded terms)",s.att,"Completed terms only. Classes in progress aren't counted yet")}
     ${row("Cumulative GPA",s.g==null?"—":s.g.toFixed(2),"Needs to be 2.0 or higher")}
     ${row("W / NP / I units",`${s.nonEval} <span class="dn">(${pct(s.nePct)})</span>`,"Needs to stay under 50% of attempted units")}
-    <div class="note">MJC places a student on academic probation after 12+ units with a cumulative GPA under 2.0, and on progress probation when W, I, NC and NP grades reach 50% of attempted units. Your official status is shown in your MJC portal.</div></div>
+    <div class="note">Academic probation: GPA under 2.0 after 12+ units. Progress probation: W, I, NC and NP reach 50% of units. Your official status is in the MJC portal.</div></div>
   <div class="card"><h2>Financial aid progress (SAP) ${s.att?badge(sapOk,0,sapOk?"Meeting standards":"Below standards"):badge(true,0,"No record yet")}</h2>
     ${row("GPA",s.g==null?"—":s.g.toFixed(2),"2.0 or higher")}
     ${row("Pace (units completed ÷ attempted)",`${s.comp} / ${s.att} = <b>${pct(s.pace)}</b>`,"67% or higher. F, NP and W all count as attempted but not completed")}
@@ -1694,7 +1694,7 @@ function vStanding(){
   ${s.repeats.length?`<table><thead><tr><th>Course</th><th>Attempts</th><th>History</th><th>Status</th></tr></thead><tbody>${s.repeats.map(r=>{
     const msg=r.passed?badge(true,0,"Passed"):r.taken>=3?badge(false,0,"Limit reached. Petition required"):r.taken+r.planned>3?badge(false,0,"Planned attempt would be #"+(r.taken+r.planned)):r.taken===2?badge(false,1,"1 enrollment left"):badge(false,1,(3-r.taken)+" enrollments left");
     return `<tr><td class="mono"><b>${esc(r.list[0].code)}</b></td><td>${r.taken}${r.planned?` <span class="dn">+${r.planned} planned</span>`:""} of 3</td><td>${r.list.map(c=>`<span class="hist ${c.status}">${esc(c.term||"—")}: ${esc(c.status==="inprogress"?"IP":c.status==="planned"?"Planned":c.grade||STATUS[c.status])}</span>`).join(" ")}</td><td>${msg}</td></tr>`}).join("")}</tbody></table>
-  <div class="note">After a substandard grade (D, F, NP) is repeated, MJC leaves the earlier grade on your transcript but drops it from your GPA. A 4th enrollment requires a petition for extenuating circumstances through Admissions & Records.</div>`:`<div class="empty">No repeated, failed or withdrawn courses.</div>`}
+  <div class="note">A repeated D, F or NP stays on your transcript but drops from your GPA. A 4th attempt needs a petition.</div>`:`<div class="empty">No repeated, failed or withdrawn courses.</div>`}
   </div>`;
 }
 
@@ -1817,7 +1817,7 @@ function vPlans(){
   const cell=(f)=>M.map(({p,m})=>`<td${p.active?' class="act"':""}>${f(m,p)}</td>`).join("");
   const best=(f,hi=true)=>{const v=M.map(x=>f(x.m));const b=hi?Math.max(...v):Math.min(...v);return v.map(x=>x===b&&v.filter(y=>y===b).length<v.length)};
   const b1=best(m=>m.majN?m.majCov/m.majN:0),b2=best(m=>m.ready);
-  return `<div class="row noprint" style="margin-bottom:12px"><div class="dn" style="flex:1">Keep more than one plan, such as your main degree and a backup, and compare them. Completed and current classes stay the same in every plan, and only future courses and the degree change.</div><button class="btn pri" onclick="openNewPlan()">+ New plan</button></div>
+  return `<div class="row noprint" style="margin-bottom:12px"><div class="dn" style="flex:1">Keep a main plan and backups to compare. Only future courses and the degree differ between plans.</div><button class="btn pri" onclick="openNewPlan()">+ New plan</button></div>
   <div class="card" style="overflow-x:auto"><table class="cmp"><thead><tr><th></th>${M.map(({p})=>`<th${p.active?' class="act"':""}><div class="pn">${esc(p.name)}${p.active?' <span class="tag ok">active</span>':""}</div><div class="row" style="gap:4px;margin-top:6px">${p.active?`<button class="btn sm" onclick="renamePlan()">Rename</button>`:`<button class="btn sm pri" onclick="switchPlan('${p.id}')">Make active</button><button class="btn sm" onclick="renamePlan('${p.id}')">Rename</button><button class="btn sm ghost danger" onclick="delPlan('${p.id}')">Delete</button>`}</div></th>`).join("")}</tr></thead><tbody>
   <tr><th>Degree</th>${cell(m=>`<b>${esc(m.major)}</b>`)}</tr>
   <tr><th>Major requirements</th>${M.map(({p,m},i)=>`<td${p.active?' class="act"':""}>${m.majN?`<div class="meter sm"><i style="width:${m.majOk/m.majN*100}%"></i><i class="ip" style="width:${(m.majCov-m.majOk)/m.majN*100}%"></i></div>${m.majOk} met, ${m.majCov} covered of ${m.majN}${b1[i]?' <span class="tag ok">best</span>':""}`:"—"}</td>`).join("")}</tr>
@@ -1862,7 +1862,7 @@ const CAMPUSES={CSU:["Bakersfield","Cal Poly Humboldt","Cal Poly Pomona","Cal Po
 const TSTAT=["Researching","Planning to apply","Applied","Admitted","Waitlisted","Denied","Committed"];
 function vCampuses(){
   const T=state.targets||[],g=gpa(state.courses).v;
-  return `<div class="row noprint" style="margin-bottom:12px"><div class="dn" style="flex:1">Add each campus you're considering. For CSU and UC campuses, the Mathematics major requirements from ASSIST.org fill in automatically. Use <a href="#majorprep">Campus Requirements</a> to see each school's courses next to yours.</div><button class="btn pri" onclick="openTarget()">+ Campus</button></div>
+  return `<div class="row noprint" style="margin-bottom:12px"><div class="dn" style="flex:1">Add each campus you're considering. Major requirements fill in from ASSIST. Use <a href="#majorprep">Campus Requirements</a> to see each school's courses next to yours.</div><button class="btn pri" onclick="openTarget()">+ Campus</button></div>
   ${T.length?`<div class="sumrow"><div><div class="ak">Schools</div><div class="av2">${T.length}</div></div><div><div class="ak">CSU / UC</div><div class="av2">${T.filter(t=>t.sys==="CSU").length} / ${T.filter(t=>t.sys==="UC").length}</div></div><div><div class="ak">Applied</div><div class="av2">${T.filter(t=>["Applied","Admitted","Waitlisted","Denied","Committed"].includes(t.status)).length}</div></div><div><div class="ak">Admitted</div><div class="av2">${T.filter(t=>["Admitted","Committed"].includes(t.status)).length}</div></div><div><div class="ak">Major prep complete</div><div class="av2">${(()=>{let n=0,d=0;T.forEach(t=>{const e=agEvalFor(t);if(e){n+=e.need;d+=e.done}else{const p=t.prep||[];n+=p.length;d+=p.filter(c=>courseState(c)==="ok").length}});return n?Math.round(d/n*100)+"%":"—"})()}</div></div></div><div class="tgrid">${T.map(t=>{const agE=agEvalFor(t),prep=agE?[]:(t.prep||[]),st=prep.map(courseState),ok=st.filter(x=>x==="ok").length,pr=st.filter(x=>x==="prog").length;
     const gpaOk=!t.minGpa||g==null?null:g>=+t.minGpa;
     return `<div class="card tcard"><div class="row" style="align-items:flex-start"><div style="flex:1;min-width:0"><div class="tsys">${t.sys==="UC"?"University of California":t.sys==="CSU"?"California State University":"Other"}</div><h2 style="margin:2px 0 0">${esc(t.sys==="UC"?"UC "+t.campus:t.sys==="CSU"&&!/^Cal Poly/.test(t.campus)?"CSU "+t.campus:t.campus)}</h2><div class="dn">${esc(t.major||t.agMajor||agLabel(t)||"Major not set")}</div></div>
@@ -1971,7 +1971,7 @@ function vReqs(){
   const did=state.settings.degreeId;
   return `
   <div class="card" style="margin-bottom:14px"><div class="row"><div><div style="font-weight:600">${esc(state.settings.major||"No degree chosen")}</div><div class="note" style="margin:2px 0 0">${did?`<a class="ext" href="${degreeUrl(did)}" target="_blank" rel="noopener">View on MJC</a>, `:""}<a class="ext" href="https://assist.org" target="_blank" rel="noopener">ASSIST.org</a></div></div><span class="spacer"></span><button class="btn pri" onclick="openDegreePicker()">${did?"Change degree":"Choose degree"}</button><button class="btn" onclick="openReq()">+ Requirement</button></div>
-  <div class="note">Major requirements follow the statewide transfer template for each degree. Course numbers are MJC's wherever they could be confirmed. Options marked "look up #" need the number from the MJC catalog. Check your exact list with a counselor. A course can count toward both the major and Cal-GETC; adding one from the options links it to its Cal-GETC area automatically.</div></div>
+  <div class="note">Requirements follow each degree's statewide template. Options marked "look up #" need the number from the MJC catalog. Check your exact list with a counselor. A course can count toward both the major and Cal-GETC; adding one from the options links it to its Cal-GETC area automatically.</div></div>
   <div class="grid two">
     <div class="card"><h2>Major<span class="hint">${esc(state.settings.major||"")}${state.reqs.some(r=>r.grp==="Major")?`, about ${majorUnitRange(state.reqs.filter(r=>r.grp==="Major").map(r=>({opts:reqOpts(r),need:r.need})))} major units`:""}</span></h2>${sheetHTML(state.reqs.filter(r=>r.grp==="Major").map(r=>({id:r.id,name:r.name,need:r.need,opts:reqOpts(r)})),true)||`<div class="empty">No degree chosen yet. <button class="btn sm" onclick="openDegreePicker()">Choose degree</button></div>`}</div>
     <div class="card"><h2>Cal-GETC<span class="hint">General education for ADTs</span></h2>${grp("Cal-GETC")}</div>
@@ -2044,7 +2044,7 @@ function autoPrereqs(){
 function openDegreePicker(){
   const list=[...DEGREES].sort((a,b)=>a.name.localeCompare(b.name));
   modal(`<h3>Choose your degree</h3>
-  <p style="color:var(--sub);margin-top:-6px">These are MJC's ${DEGREES.length} Associate Degrees for Transfer (AA-T / AS-T). Your courses stay when you switch. Any that match the new degree get linked to it.</p>
+  <p style="color:var(--sub);margin-top:-6px">These are MJC's ${DEGREES.length} Associate Degrees for Transfer (AA-T / AS-T). Your courses stay when you switch.</p>
   <input type="text" id="dq" placeholder="Search degrees…" oninput="filterDeg()" autocomplete="off">
   <div class="row" style="margin:10px 0 6px"><button class="btn sm deg-f on" data-f="" onclick="degF(this)">All</button><button class="btn sm deg-f" data-f="AA-T" onclick="degF(this)">AA-T</button><button class="btn sm deg-f" data-f="AS-T" onclick="degF(this)">AS-T</button></div>
   <div id="dlist" class="dlist">${list.map(d=>`<div class="drow" data-n="${esc(d.name.toLowerCase())}" data-t="${d.type}"><div><div style="font-weight:500">${esc(d.name)} <span class="tag ${d.type==="AA-T"?"plan":"ok"}">${d.type}</span>${state.settings.degreeId===d.id?` <span class="tag prog">current</span>`:""}</div><div class="dn">${d.groups.length} requirement groups, ${d.groups.reduce((a,g)=>a+g.need,0)} major courses, <a class="ext" href="${degreeUrl(d.id)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">MJC page</a></div></div><div class="row"><button class="btn sm" onclick="previewDegree('${d.id}')">View lists</button><button class="btn sm pri" onclick="pickDegree('${d.id}')">Choose</button></div></div>`).join("")}
@@ -2075,7 +2075,7 @@ function vPlan(){
     ${col("","Unscheduled",uns,false)}
     ${ts.map(t=>col(t,t,state.courses.filter(c=>c.term===t),termIndex(t)<cur)).join("")}
   </div>
-  <div class="note">Moving a course into a past term marks it completed. Into the current term marks it in progress, and into a future term marks it planned. Change the term range under Setup &amp; Backup.</div>`;
+  <div class="note">A course's status follows its term: past, current or future.</div>`;
 }
 function wireBoard(){
   let dragId=null;
@@ -2123,7 +2123,7 @@ function vCatalog(){
     <select id="cats" onchange="catSub=this.value;catFilter()" style="max-width:150px"><option value="">All subjects</option>${SUBJECTS.map(s=>`<option ${s===catSub?"selected":""}>${s}</option>`).join("")}</select>
     <select id="cata" onchange="catArea=this.value;catFilter()" style="max-width:190px"><option value="">Any requirement</option><option value="major" ${catArea==="major"?"selected":""}>Counts toward my major</option>${GE_AREAS.map(a=>`<option value="${a[0]}" ${catArea===a[0]?"selected":""}>Cal-GETC ${a[1]} - ${a[2]}</option>`).join("")}</select></div>
   <div style="overflow-x:auto;max-height:68vh;overflow-y:auto"><table id="cattable"><thead><tr><th>Code</th><th>Title</th><th>Units</th><th>Counts toward</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
-  <div class="note">This list combines MJC's Cal-GETC course list, SJSU's MJC course-equivalency list and MJC's current class schedule. It isn't every course MJC offers. If yours isn't here, add it with "+ Other" on the Requirements tab or "+ Course" on All Courses. Units come from MJC\'s published lists. Any marked <span class="est">est.</span> aren\'t confirmed yet, so check them in the catalog.</div></div>`;
+  <div class="note">Not every MJC course is listed. If yours is missing, add it with "+ Other" on the Requirements tab or "+ Course" on All Courses. Units come from MJC\'s published lists. Any marked <span class="est">est.</span> aren\'t confirmed yet, so check them in the catalog.</div></div>`;
 }
 function catFilter(){
   const q=catQ.trim().toLowerCase();
@@ -2190,7 +2190,7 @@ function vDeadlines0(){
     return `<div class="dl${x.done?" done":""}"><div class="cd ${cls}"><b>${n<0?I("check"):n}</b><small>${n<0?"passed":n===1?"day":"days"}</small></div>
     <div><div class="dt">${esc(x.title)}${x.est?` <span class="tag plan" title="Based on the Fall 2027 cycle. Confirm when the official dates come out">estimated</span>`:""}</div><div class="dn">${fmtDate(x.date)}${x.note?", "+esc(x.note):""}</div></div>
     <div class="row"><input type="checkbox" title="Mark done" ${x.done?"checked":""} onchange="toggleDl('${x.id}')"><button class="btn sm ghost" onclick="openDeadline('${x.id}')">Edit</button></div></div>`}).join("")}
-  <div class="note">The estimated dates follow this year's cycle (Fall 2027 applicants): TAG Sep 1–30, filing Oct 1–Nov 30, Cal Grant Mar 2. Confirm them with the MJC Transfer Center or the UC/CSU sites once the Fall 2028 dates are posted.</div>
+  <div class="note">Estimated from this year's dates. Confirm once Fall 2028 dates are posted.</div>
   </div>`;
 }
 function toggleDl(id){const x=state.deadlines.find(d=>d.id===id);x.done=!x.done;commit()}
@@ -2423,7 +2423,7 @@ function vMessages(){
     <div class="mb" onclick="openMsg(${i})"><div class="mt">${u?'<i class="udot"></i>':""}${esc(m.title)}</div><div class="dn">${esc(m.body)}</div></div>
     <div class="mm"><span class="tag ${m.kind==="bad"?"need":m.kind==="warn"?"warnt":"plan"}">${lab[m.kind]}</span><button class="btn sm ghost" onclick="markRead('${esc(m.key)}',${u})">${u?"Mark read":"Mark unread"}</button></div></div>`}).join("")}</div>`
   :`<div class="empty">${msgFilter==="all"?"No messages. You're all caught up.":"Nothing here."}</div>`}
-  <div class="note">Messages are generated from your own planner: deadlines, registration dates, holds you've recorded, standing checks and plan issues. Official notices from MJC go to your student email and the MJC portal.</div></div>`;
+  <div class="note">Alerts from your planner. Official MJC notices go to your student email and portal.</div></div>`;
 }
 
 /* ---------- registration & holds ---------- */
@@ -2453,7 +2453,7 @@ function vRegistration(){
   <div class="card"><h2>Enrollment status</h2>
     <div class="estat"><div><div class="label">${esc(cur)}, current</div><div class="val">${cu}<small> units</small></div><span class="tag ${ck}">${cl}</span></div>
     <div><div class="label">${esc(nt)}, next</div><div class="val">${nu}<small> units</small></div><span class="tag ${nk}">${nl}</span></div></div>
-    <div class="note">Full-time is 12 or more units in a fall or spring term; 9–11.5 is three-quarter time and 6–8.5 is half-time. Financial aid awards, athletics and some insurance depend on these levels.</div></div>
+    <div class="note">Full-time is 12+ units, three-quarter 9–11.5, half-time 6–8.5. Financial aid depends on these.</div></div>
   </div>
   <div class="grid two" style="margin-top:14px">
   <div class="card"><h2>Registration readiness<span class="hint">${okN} of ${ready.length} for ${esc(nt)}</span></h2>
@@ -2468,7 +2468,7 @@ function vRegistration(){
       ${state.regAppts[t]?`<div class="dn cdn">${(()=>{const ms=new Date(state.regAppts[t])-new Date();return ms>0?`Opens in ${Math.floor(ms/864e5)}d ${Math.floor(ms%864e5/36e5)}h`:"Open now"})()}</div>`:""}
       ${[["add","Last day to add"],["dropNoW","Last day to drop (no W)"],["dropW","Last day to drop (with W)"],["finals","Finals week begins"]].map(([k,l])=>`<label class="l">${l}</label><input type="date" value="${esc(td(t)[k]||"")}" onchange="setTD('${t}','${k}',this.value)">`).join("")}
     </div>`).join("")}</div>
-    <div class="note">These dates feed the Message Center and the Academic Calendar. Dates differ for short-term and late-start classes, so check each class in your MJC portal.</div></div>`;
+    <div class="note">Short-term and late-start classes have different dates. Check the MJC portal.</div></div>`;
 }
 function setAppt(t,v){if(v)state.regAppts[t]=v;else delete state.regAppts[t];commit();toast(v?`Registration appointment saved for ${t}`:`Registration appointment cleared for ${t}`)}
 function setTD(t,k,v){const d=state.termDates[t]||(state.termDates[t]={});if(v)d[k]=v;else delete d[k];commit()}
@@ -2602,7 +2602,7 @@ function mpMajChange(init){
   inp.style.display=v==="__other"||!list.length?"":"none";
   if(v&&v!=="__other"){inp.value=v}else if(!init&&v==="")inp.value="";
   ag.value=it&&it.built?it.label:"";
-  note.innerHTML=it?(it.built?"Requirements from ASSIST fill in automatically.":`Requirements for this major aren't built in yet. After saving, open <b>Campus Requirements</b> and use <b>Import from ASSIST</b> to add them.`):list.length?`${list.length} majors at this campus have MJC agreements on ASSIST; ${el.dataset.n||0} have requirements built in.`:"";
+  note.innerHTML=it?(it.built?"Requirements from ASSIST fill in automatically.":`Not built in yet. Use <b>Import from ASSIST</b> on Campus Requirements.`):list.length?`${list.length} majors at this campus have MJC agreements on ASSIST; ${el.dataset.n||0} have requirements built in.`:"";
 }
 
 /* ---------- ASSIST import (any major, any CSU/UC) ---------- */
@@ -2750,7 +2750,7 @@ function agreementView(c,m,t){
       <table class="agt"><thead><tr><th>${esc(c.sys==="UC"?"UC "+c.name.split(", ").pop():c.name.replace(/California State University, /,"CSU "))} course</th><th>MJC course(s) that count</th><th class="n">Status</th></tr></thead><tbody>
       ${S.rows.map((r,ri)=>{const e=ge.secs[si].rows[ri];return `<tr class="r-${e.s}"><td>${r.recv.map(x=>`<b>${esc(x.k)}</b> ${esc(x.t)}${x.u!=null?` <span class="dn">(${x.u})</span>`:""}`).join(r.recvOr?'<div class="orl">or</div>':"<br>")}</td><td>${mjcCell(r,e)}</td><td class="n">${statusTag(e.s)}</td></tr>`}).join("")}
       </tbody></table>`).join("")}</div>`}).join("")}
-  <div class="note">From the official ASSIST.org articulation agreement (MJC → ${esc(c.name)}, ${yr}). MJC's newer course numbers are matched to the older ones ASSIST lists. "No MJC course" means there's no equivalent at MJC, so you'd take it after transferring. Always confirm with ASSIST and your counselor.</div></div>`;
+  <div class="note">From the official ASSIST.org articulation agreement (MJC → ${esc(c.name)}, ${yr}). "No MJC course" means you'd take it after transferring. Confirm with your counselor.</div></div>`;
 }
 function vMajorPrep(){
   const db=assistDB(),T=mpTargets();
@@ -2792,13 +2792,13 @@ function agSummary(t){if(t.sys!=="CSU"&&t.sys!=="UC")return "";const c=assistCam
    ===================================================================== */
 const isFY=()=>state&&state.settings&&state.settings.path==="firstyear";
 const AG=[
-  {k:"a",n:"History / Social Science",req:2,rec:2,note:"2 years: 1 year of world history, cultures and geography, and 1 year of U.S. history (or half a year of U.S. history plus half a year of civics or American government)."},
-  {k:"b",n:"English",req:4,rec:4,note:"4 years of college-prep English. ESL/ELD classes count for at most 1 year."},
-  {k:"c",n:"Mathematics",req:3,rec:4,note:"3 years including algebra, geometry and advanced algebra (or integrated math I–III). A 4th year is recommended."},
-  {k:"d",n:"Science",req:2,rec:3,note:"2 years of college-prep science (3 recommended), covering at least two of biology, chemistry, physics or earth and space science."},
-  {k:"e",n:"Language Other Than English",req:2,rec:3,note:"2 years of the same language (3 recommended). Language courses taken in 7th or 8th grade can count."},
-  {k:"f",n:"Visual & Performing Arts",req:1,rec:1,note:"1 year of the same arts discipline: dance, music, theater, visual arts or interdisciplinary arts."},
-  {k:"g",n:"College-Prep Elective",req:1,rec:1,note:"1 year of an approved elective. Extra years in areas a–f beyond the minimum also count here."}];
+  {k:"a",n:"History / Social Science",req:2,rec:2,note:"1 year of world history and 1 year of U.S. history (or half U.S. history, half civics/government)."},
+  {k:"b",n:"English",req:4,rec:4,note:"4 years. ESL/ELD counts for at most 1 year."},
+  {k:"c",n:"Mathematics",req:3,rec:4,note:"Algebra, geometry and advanced algebra (or Integrated Math I–III)."},
+  {k:"d",n:"Science",req:2,rec:3,note:"At least two of biology, chemistry, physics or earth and space science."},
+  {k:"e",n:"Language Other Than English",req:2,rec:3,note:"Same language. 7th and 8th grade classes can count."},
+  {k:"f",n:"Visual & Performing Arts",req:1,rec:1,note:"1 year of one arts discipline."},
+  {k:"g",n:"College-Prep Elective",req:1,rec:1,note:"Extra years in areas A–F also count here."}];
 const AGN=Object.fromEntries(AG.map(a=>[a.k,a.n]));
 const LET={A:4,B:3,C:2,D:1,F:0};
 const gLetter=g=>{const m=String(g||"").trim().toUpperCase().match(/^([ABCDF])[+-]?$/);return m?m[1]:null};
@@ -2861,12 +2861,12 @@ function eligCard(title,rows){const ok=rows.every(r=>r[0]==="ok"),bad=rows.some(
 
 /* ---------- dashboard ---------- */
 function pathPrompt(){if(state.settings.pathSet)return "";
-  return `<div class="card hero"><div><div style="font-size:17px;font-weight:600">Who is this planner for?</div><div style="color:var(--sub)">Pick the path that fits. You can switch any time in Settings.</div></div><div class="row"><button class="btn pri" onclick="setPath('transfer')">Transferring from a community college</button><button class="btn" onclick="setPath('firstyear')">Going from high school to a 4-year university</button></div></div>`}
+  return `<div class="card hero"><div><div style="font-size:17px;font-weight:600">Who is this planner for?</div><div style="color:var(--sub)">You can switch any time in Settings.</div></div><div class="row"><button class="btn pri" onclick="setPath('transfer')">Transferring from a community college</button><button class="btn" onclick="setPath('firstyear')">Going from high school to a 4-year university</button></div></div>`}
 function vFYOverview(){
   const E=fyElig(),A=E.A,G=E.G,hs=fyInit();
   const up=state.deadlines.filter(x=>!x.done&&daysUntil(x.date)>=0).sort((a,b)=>a.date.localeCompare(b.date));const next=up[0];
   const T=state.targets||[];
-  return `${pathPrompt()}${hs.gradSet?"":`<div class="card hero"><div><div style="font-size:17px;font-weight:600">What grade are you in?</div><div style="color:var(--sub)">Set your grade so your class year, GPA and deadlines are right.</div></div><button class="btn pri" onclick="askGrade()">Set my grade</button></div>`}${hs.courses.length?"":`<div class="card hero"><div><div style="font-size:17px;font-weight:600">Add your high school classes</div><div style="color:var(--sub)">Upload your unofficial high school transcript, or enter classes by hand. Your A–G progress and UC/CSU GPA calculate automatically.</div></div><div class="row"><button class="btn pri" onclick="hsImport()">Import transcript</button><button class="btn" onclick="hsOpen()">Add a class</button><button class="btn" onclick="hsSample()">Start from a typical 4-year plan</button></div></div>`}
+  return `${pathPrompt()}${hs.gradSet?"":`<div class="card hero"><div><div style="font-size:17px;font-weight:600">What grade are you in?</div><div style="color:var(--sub)">Set your grade so your class year, GPA and deadlines are right.</div></div><button class="btn pri" onclick="askGrade()">Set my grade</button></div>`}${hs.courses.length?"":`<div class="card hero"><div><div style="font-size:17px;font-weight:600">Add your high school classes</div><div style="color:var(--sub)">Upload your transcript or add classes by hand.</div></div><div class="row"><button class="btn pri" onclick="hsImport()">Import transcript</button><button class="btn" onclick="hsOpen()">Add a class</button><button class="btn" onclick="hsSample()">Start from a typical 4-year plan</button></div></div>`}
   <div class="grid tiles">
     <div class="card tile"><div class="label">Grade</div><div class="val" style="font-size:22px">${hsGradeLabel()}</div><div class="foot">Class of ${esc(hs.gradYear)}, starting college Fall ${esc(hs.gradYear)}</div></div>
     <div class="card tile"><div class="label">A–G courses</div><div class="val">${A.total}<small> / 15</small></div><div class="foot">years completed, ${A.totalAll} with current and planned</div></div>
@@ -2882,7 +2882,7 @@ function vFYOverview(){
   <div class="grid two" style="margin-top:14px">${eligCard("UC minimum requirements",E.uc)}${eligCard("CSU minimum requirements",E.csu)}</div>
   <div class="card" style="margin-top:14px"><h2>Coming up</h2>${up.slice(0,6).map(x=>`<div class="srow"><div class="sk">${esc(x.title)}${x.note?`<div class="dn">${esc(x.note)}</div>`:""}</div><div class="sv">${fmtDate(x.date)}<div class="dn">in ${daysUntil(x.date)} days</div></div></div>`).join("")||'<div class="empty">No upcoming deadlines.</div>'}
    <div class="mfoot"><a class="btn sm" href="#deadlines">All deadlines</a></div></div>
-  <div class="note">Meeting the minimums makes you eligible to be considered. Admission to a specific campus or major is competitive. Always confirm with your school counselor.</div>`;
+  <div class="note">Meeting the minimums doesn't guarantee admission. Confirm with your counselor.</div>`;
 }
 
 /* ---------- high school courses ---------- */
@@ -2893,7 +2893,7 @@ function vHSCourses(){const hs=fyInit();const L=hs.courses;
     return `<div class="card" style="margin-top:14px"><h2>${g}th grade${g===hsGrade()?" (this year)":""}<span class="hint">${rows.length} class${rows.length===1?"":"es"}</span></h2>
     ${rows.length?`<table class="tbl"><thead><tr><th>Class</th><th>A–G area</th><th>Length</th><th>Level</th><th>Grades</th><th>Status</th><th></th></tr></thead><tbody>${rows.map(c=>`<tr><td><b>${esc(c.title)}</b></td><td>${c.area&&AGN[c.area]?`${c.area.toUpperCase()} - ${AGN[c.area]}`:'<span class="dn">Not A–G</span>'}</td><td>${c.kind==="year"?"Full year":c.kind==="summer"?`Summer after ${g}th`:"Semester"}</td><td>${c.hon?HON[c.hon]:"—"}</td><td>${hsGradeCell(c)}</td><td>${c.status==="done"?'<span class="tag ok">Completed</span>':c.status==="inprogress"?'<span class="tag warnt">In progress</span>':'<span class="tag plan">Planned</span>'}</td><td class="n"><button class="btn sm ghost" onclick="hsOpen('${c.id}')">Edit</button></td></tr>`).join("")}</tbody></table>`:'<div class="empty">No classes yet.</div>'}
     <div class="mfoot"><button class="btn sm" onclick="hsOpen(null,${g})">+ Add a ${g}th grade class</button></div></div>`};
-  return `<div class="card"><div class="row"><div style="flex:1"><b>${esc(hs.school||"Your high school")}</b>, Class of ${esc(hs.gradYear)}<div class="dn">Enter each class once. For full-year classes, enter the fall and spring semester grades.</div></div><button class="btn pri sm" onclick="hsImport()">Import transcript</button><button class="btn sm" onclick="hsOpen()">+ Add a class</button>${L.length?"":`<button class="btn sm" onclick="hsSample()">Start from a typical 4-year plan</button>`}<a class="btn sm" href="https://hs-articulation.ucop.edu/agcourselist" target="_blank" rel="noopener">Your school's A–G list</a></div></div>
+  return `<div class="card"><div class="row"><div style="flex:1"><b>${esc(hs.school||"Your high school")}</b>, Class of ${esc(hs.gradYear)}<div class="dn">For full-year classes, enter both semester grades.</div></div><button class="btn pri sm" onclick="hsImport()">Import transcript</button><button class="btn sm" onclick="hsOpen()">+ Add a class</button>${L.length?"":`<button class="btn sm" onclick="hsSample()">Start from a typical 4-year plan</button>`}<a class="btn sm" href="https://hs-articulation.ucop.edu/agcourselist" target="_blank" rel="noopener">Your school's A–G list</a></div></div>
   ${[9,10,11,12].map(sec).join("")}`}
 function hsOpen(id,grade){const hs=fyInit();const c=id?hs.courses.find(x=>x.id===id):{title:"",area:"b",grade:grade||Math.max(9,Math.min(12,hsGrade())),kind:"year",hon:"",g1:"",g2:"",status:(grade||hsGrade())<hsGrade()?"done":(grade||hsGrade())===hsGrade()?"inprogress":"planned"};if(!c)return;
   const G=["","A","A-","B+","B","B-","C+","C","C-","D","F","P","NP"];const gsel=(id,v)=>`<select id="${id}">${G.map(g=>`<option value="${g}" ${g===(v||"")?"selected":""}>${g||"No grade yet"}</option>`).join("")}</select>`;
@@ -2906,7 +2906,7 @@ function hsOpen(id,grade){const hs=fyInit();const c=id?hs.courses.find(x=>x.id==
    <div><label class="l">Status</label><select id="h_s"><option value="done" ${c.status==="done"?"selected":""}>Completed</option><option value="inprogress" ${c.status==="inprogress"?"selected":""}>Taking now</option><option value="planned" ${c.status==="planned"?"selected":""}>Planned</option></select></div>
    <div><label class="l">Fall / first grade</label>${gsel("h_g1",c.g1)}</div>
    <div id="h_g2w" style="${c.kind==="year"?"":"display:none"}"><label class="l">Spring grade</label>${gsel("h_g2",c.g2)}</div>
-  </div><div class="note">Honors points count only for UC-approved honors, AP, IB higher-level and transferable college courses. Check your school's A–G list.</div>
+  </div><div class="note">Honors points count only for UC-approved honors, AP, IB and college classes.</div>
   <div class="mfoot"><button class="btn pri" onclick="hsSave('${id||""}')">Save</button>${id?`<button class="btn danger" onclick="hsDel('${id}')">Delete</button>`:""}<span class="spacer"></span><button class="btn" onclick="closeModal()">Cancel</button></div>`);
   setTimeout(()=>{const t=document.getElementById("h_t");if(t&&!id)t.focus()},30)}
 function hsSuggest(t){const sch=fyInit().school,ag=aglName(sch),ol=ag&&t.length>3?aglLookup(t,ag):null;const la=ol?ol.a:ag&&t.length>3?"":listArea(t,sch);if(ol&&ol.h&&!guessHon(t))setTimeout(()=>{const e=document.getElementById("h_h");if(e)e.value=/\bAP\b/i.test(ol.t)?"AP":"H"},0);const a=la||guessArea(t);const h=guessHon(t);if(a!==undefined)document.getElementById("h_a").value=a;if(h)document.getElementById("h_h").value=h;const el=document.getElementById("h_sug");if(el)el.textContent=la?`On ${sch}'s A–G list as area ${la.toUpperCase()}`:la===""&&t.length>3?`Not found on ${sch}'s A–G list`:""}
@@ -2941,11 +2941,11 @@ function vHSGPA(){const G=fyGpa(),res=fyInit().resident!==false;const f=v=>v==nu
    <div class="card tile"><div class="label">UC GPA, fully weighted</div><div class="val">${f(G.ucUncap)}</div><div class="foot">${G.hAll} honors semesters, no cap</div></div>
    <div class="card tile"><div class="label">CSU GPA</div><div class="val">${f(G.csuW)}</div><div class="foot">${G.csuN} grades after 9th (${res?"2.5":"3.0"} minimum)</div></div></div>
   <div class="card" style="margin-top:14px"><h2>How it's calculated</h2>
-   <div class="srow"><div class="sk">Which grades count (UC)</div><div class="sv">A–G classes from the summer after 9th grade through the summer after 11th grade</div></div>
-   <div class="srow"><div class="sk">Which grades count (CSU)</div><div class="sv">A–G classes after 9th grade (10th–12th, including the summer after 9th)</div></div>
-   <div class="srow"><div class="sk">Grade points</div><div class="sv">A = 4, B = 3, C = 2, D = 1, F = 0. Plus and minus don't change points. P/NP grades aren't counted.</div></div>
-   <div class="srow"><div class="sk">Honors points (UC)</div><div class="sv">+1 per semester of a UC-approved honors, AP, IB or transferable college class with a C or better. At most 8 semesters, and no more than 4 from 10th grade. You're using ${G.hCap}.</div></div>
-   <div class="srow"><div class="sk">Honors points (CSU)</div><div class="sv">Estimated here with up to 8 honors semesters (${G.csuH} used). Cal State Apply calculates the official number.</div></div>
+   <div class="srow"><div class="sk">Which grades count (UC)</div><div class="sv">A–G classes, summer after 9th through summer after 11th</div></div>
+   <div class="srow"><div class="sk">Which grades count (CSU)</div><div class="sv">A–G classes from 10th–12th grade</div></div>
+   <div class="srow"><div class="sk">Grade points</div><div class="sv">A=4, B=3, C=2, D=1, F=0. No +/−. P/NP not counted.</div></div>
+   <div class="srow"><div class="sk">Honors points (UC)</div><div class="sv">+1 per honors semester (C or better), max 8, no more than 4 from 10th. Using ${G.hCap}.</div></div>
+   <div class="srow"><div class="sk">Honors points (CSU)</div><div class="sv">Estimated, up to 8 honors semesters (${G.csuH} used).</div></div>
   </div>
   <div class="card" style="margin-top:14px"><h2>Grades counted<span class="hint">${G.rows.length} completed A–G semester grades</span></h2>
    ${G.rows.length?`<table class="tbl"><thead><tr><th>Class</th><th>Term</th><th>Counts as</th><th>Grade</th><th>Honors</th><th>UC</th><th>CSU</th></tr></thead><tbody>${G.rows.sort((a,b)=>a.gpaGrade-b.gpaGrade).map(s=>`<tr><td>${esc(s.c.title)}</td><td>${s.term}</td><td>${s.gpaGrade}th grade</td><td>${esc(s.g)}</td><td>${s.c.hon?HON[s.c.hon]:"—"}</td><td>${s.gpaGrade===10||s.gpaGrade===11?"Yes":"No"}</td><td>${s.gpaGrade>=10?"Yes":"No"}</td></tr>`).join("")}</tbody></table>`:'<div class="empty">Add grades on My Classes to see your GPA.</div>'}</div>`}
@@ -2956,11 +2956,11 @@ const ACT_CAT=["Award or honor","Educational preparation program","Extracurricul
 const wc=t=>(String(t||"").trim().match(/\S+/g)||[]).length;
 function vApply(){const hs=fyInit();const P=hs.piq;const chosen=Object.keys(P).filter(k=>P[k]&&P[k].on).length;
   return `<div class="card"><h2>UC Personal Insight Questions<span class="hint">answer 4 of 8, up to 350 words each</span></h2>
-   <div class="dn" style="margin-bottom:8px">${chosen} of 4 chosen. Read the full prompts on the UC application site. CSU applications don't require essays.</div>
+   <div class="dn" style="margin-bottom:8px">${chosen} of 4 chosen. CSU doesn't require essays.</div>
    ${PIQ.map((q,i)=>{const p=P[i]||{};const n=wc(p.t);return `<div class="piq${p.on?" on":""}"><label class="row"><input type="checkbox" ${p.on?"checked":""} onchange="piqSet(${i},'on',this.checked)"><b>${i+1}. ${q}</b><span class="spacer"></span><span class="dn">${p.on?`${n} / 350 words`:""}</span></label>
     ${p.on?`<textarea rows="6" oninput="piqType(${i},this)" placeholder="Draft your answer…">${esc(p.t||"")}</textarea><div class="dn" id="piqc${i}" style="${n>350?"color:var(--red)":""}">${n>350?`${n-350} words over the limit`:""}</div>`:""}</div>`}).join("")}</div>
   <div class="card" style="margin-top:14px"><h2>Activities and awards<span class="hint">UC allows up to 20</span></h2>
-   ${hs.acts.length?`<table class="tbl"><thead><tr><th>Activity</th><th>Category</th><th>Grades</th><th>Time</th><th></th></tr></thead><tbody>${hs.acts.map(a=>`<tr><td><b>${esc(a.name)}</b><div class="dn">${esc(a.desc||"")}</div></td><td>${esc(a.cat)}</td><td>${(a.grades||[]).join(", ")||"—"}</td><td>${a.hrs?`${esc(a.hrs)} hrs/week`:""}${a.wks?`, ${esc(a.wks)} weeks/year`:""}</td><td class="n"><button class="btn sm ghost" onclick="actOpen('${a.id}')">Edit</button></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Start listing clubs, sports, jobs, volunteering, programs and awards from 9th grade on.</div>'}
+   ${hs.acts.length?`<table class="tbl"><thead><tr><th>Activity</th><th>Category</th><th>Grades</th><th>Time</th><th></th></tr></thead><tbody>${hs.acts.map(a=>`<tr><td><b>${esc(a.name)}</b><div class="dn">${esc(a.desc||"")}</div></td><td>${esc(a.cat)}</td><td>${(a.grades||[]).join(", ")||"—"}</td><td>${a.hrs?`${esc(a.hrs)} hrs/week`:""}${a.wks?`, ${esc(a.wks)} weeks/year`:""}</td><td class="n"><button class="btn sm ghost" onclick="actOpen('${a.id}')">Edit</button></td></tr>`).join("")}</tbody></table>`:'<div class="empty">List clubs, sports, jobs, volunteering and awards from 9th grade on.</div>'}
    <div class="mfoot"><button class="btn sm pri" onclick="actOpen()" ${hs.acts.length>=20?"disabled":""}>+ Add activity or award</button></div></div>`}
 function piqSet(i,k,v){const P=fyInit().piq;P[i]=P[i]||{};if(k==="on"&&v&&Object.values(P).filter(x=>x&&x.on).length>=4){toast("You can choose 4 questions");render();return}P[i][k]=v;commit()}
 let _piqT=null;function piqType(i,el){const P=fyInit().piq;P[i]=P[i]||{};P[i].t=el.value;const n=wc(el.value);const c=document.getElementById("piqc"+i);if(c){c.textContent=n>350?`${n-350} words over the limit`:"";c.style.color=n>350?"var(--red)":""}
@@ -2992,7 +2992,7 @@ function setPath(p){const s=state.settings,old=s.path||"transfer";state.stash=st
     const st=state.stash[p];if(p==="firstyear"){fyInit();state.deadlines=st?st.deadlines:fyDeadlines();state.checklist=st?st.checklist:fyChecklist()}
     else{state.deadlines=st?st.deadlines:seed().deadlines;state.checklist=st?st.checklist:defaultChecklist();if(st&&st.target)s.target=st.target}}
   s.path=p;s.pathSet=true;if(p==="firstyear")state.settings.target="Fall "+fyInit().gradYear;location.hash="overview";commit();if(p==="firstyear"&&!fyInit().gradSet)askGrade();else toast(p==="firstyear"?"Switched to the high school → university planner":"Switched to the transfer planner")}
-function askGrade(){const y=schoolYearEnd();modal(`<h3>What grade are you in?</h3><div class="dn" style="margin-bottom:12px">This sets your class year, which classes count toward your GPA, and your application deadlines. You can change it later in Settings.</div><div class="row">${[9,10,11,12].map(g=>`<button class="btn ${g===12?"pri":""}" onclick="setGrade(${g})">${g}th grade<br><small>Class of ${y+12-g}</small></button>`).join("")}</div>`)}
+function askGrade(){const y=schoolYearEnd();modal(`<h3>What grade are you in?</h3><div class="dn" style="margin-bottom:12px">This sets your class year and deadlines. You can change it in Settings.</div><div class="row">${[9,10,11,12].map(g=>`<button class="btn ${g===12?"pri":""}" onclick="setGrade(${g})">${g}th grade<br><small>Class of ${y+12-g}</small></button>`).join("")}</div>`)}
 function setGrade(g){const hs=fyInit(),y=schoolYearEnd()+12-g;hs.gradYear=y;hs.gradSet=true;state.settings.target="Fall "+y;state.deadlines=fyDeadlines();closeModal();commit();toast(`Set to ${g}th grade, Class of ${y}`)}
 function pathCard(){const s=state.settings,fy=s.path==="firstyear",hs=fy?fyInit():null;const y=schoolYearEnd();
   return `<div class="card" style="margin-bottom:14px"><h2>Planner type</h2>
@@ -3016,7 +3016,7 @@ const _agSumT=agSummary;agSummary=function(t){if(!isFY())return _agSumT(t);if(t.
 const _calT=calItems;calItems=function(){const L=_calT();return isFY()?L.filter(x=>x.cat!=="Term"&&x.cat!=="Registration"):L};
 /* ---------- campuses (first-year) ---------- */
 function vFYCampuses(){const T=state.targets||[],E=fyElig();const f=v=>v==null?"—":v.toFixed(2);
-  return `<div class="row noprint" style="margin-bottom:12px"><div class="dn" style="flex:1">Add each university you're applying to as a first-year student. UC and CSU cards show whether you meet that system's minimum requirements.</div><button class="btn pri sm" onclick="openTarget()">+ Add campus</button></div>
+  return `<div class="row noprint" style="margin-bottom:12px"><div class="dn" style="flex:1">Add the universities you're applying to.</div><button class="btn pri sm" onclick="openTarget()">+ Add campus</button></div>
   ${T.length?T.map(t=>{const rows=t.sys==="UC"?E.uc:t.sys==="CSU"?E.csu:null;const g=t.sys==="UC"?E.G.ucCap:t.sys==="CSU"?E.G.csuW:null;const gOk=!t.minGpa||g==null?null:g>=+t.minGpa;
    return `<div class="card tcard" style="margin-bottom:14px"><div class="row" style="align-items:flex-start"><div style="flex:1;min-width:0"><div class="tsys">${t.sys==="UC"?"University of California":t.sys==="CSU"?"California State University":"Other"}</div><h2 style="margin:2px 0 0">${esc(t.sys==="UC"?"UC "+t.campus:t.sys==="CSU"?"CSU "+t.campus:t.campus)}</h2><div class="dn">${esc(t.major||"Major not set")}</div></div>
     <select class="tstat s${TSTAT.indexOf(t.status||"Researching")}" onchange="tgtSet('${t.id}','status',this.value)">${TSTAT.map(s=>`<option ${s===(t.status||"Researching")?"selected":""}>${s}</option>`).join("")}</select></div>
@@ -3160,15 +3160,15 @@ function hsImport(){
   <div class="mfoot"><button class="btn pri" onclick="hsPreview(document.getElementById('impText').value)">Read transcript</button><button class="btn" onclick="closeModal()">Cancel</button></div>`)}
 async function hsImportFile(inp){const f=inp.files[0];if(!f)return;const st=document.getElementById("impStatus");st.textContent="Reading…";
   try{const txt=f.type==="application/pdf"||/\.pdf$/i.test(f.name)?await hsPdfToText(await f.arrayBuffer()):await f.text();document.getElementById("impText").value=txt;st.textContent="";hsPreview(txt)}
-  catch(e){st.textContent="Couldn't read that PDF here. Open it, copy all the text and paste it in the box instead."}}
+  catch(e){st.textContent="Couldn't read that PDF. Paste the text instead."}}
 let _hsImp=[];
 function hsPreview(txt){_hsImp=parseHSTranscript(txt);
-  if(!_hsImp.length){const st=document.getElementById("impStatus");if(st)st.textContent="No classes found. Try copying and pasting the transcript text instead.";return}
+  if(!_hsImp.length){const st=document.getElementById("impStatus");if(st)st.textContent="No classes found. Try pasting the text instead.";return}
   const G=["","A","A-","B+","B","B-","C+","C","C-","D+","D","D-","F","P","NP"];
   const gs=(i,k,v)=>`<select onchange="_hsImp[${i}].${k}=this.value">${G.concat(G.includes(v)?[]:[v]).map(g=>`<option ${g===v?"selected":""}>${g}</option>`).join("")}</select>`;
   const noLvl=_hsImp.filter(r=>r._nolvl).length;const sch=_hsImp._school,sl=sch&&(_hsImp._official?{src:"official UC A–G course list, 2021-22 to 2026-27"}:SCHOOL_AG[sch]);const tgy=_hsImp._gradYear,hgy=+fyInit().gradYear;
   modal(`<h3>Check your classes</h3>
-  <div class="dn" style="margin-bottom:8px">Found ${_hsImp.length} classes. Fix anything that's wrong, and uncheck classes you don't want. ${sl?` Matched against <b>${esc(sch)}</b>'s approved list (${esc(sl.src)}). Classes marked "Not on school list" didn't match any listed course, so double-check them.`:" A–G areas are guesses from the class names. Check your school's A–G list if you're not sure."}${noLvl?` <b>${noLvl} class${noLvl>1?"es":""} had no grade level on the transcript; set them below.</b>`:""}</div>
+  <div class="dn" style="margin-bottom:8px">Found ${_hsImp.length} classes. Fix anything wrong and uncheck classes to skip. ${sl?` Matched against <b>${esc(sch)}</b>'s approved list (${esc(sl.src)}). Double-check anything marked "Not on school list."`:" A–G areas are guessed from class names."}${noLvl?` <b>${noLvl} class${noLvl>1?"es":""} had no grade level on the transcript; set them below.</b>`:""}</div>
   <div style="max-height:55vh;overflow:auto"><table class="tbl"><thead><tr><th></th><th>Class</th><th>A–G</th><th></th><th>Grade</th><th>Length</th><th>Level</th><th>Grades</th><th>Status</th></tr></thead><tbody>
   ${_hsImp.map((r,i)=>`<tr><td><input type="checkbox" ${r.inc?"checked":""} onchange="_hsImp[${i}].inc=this.checked"></td>
    <td><input type="text" value="${esc(r.title)}" onchange="_hsImp[${i}].title=this.value" style="min-width:160px"></td>
@@ -3180,7 +3180,7 @@ function hsPreview(txt){_hsImp=parseHSTranscript(txt);
    <td style="white-space:nowrap">${gs(i,"g1",r.g1)} ${gs(i,"g2",r.g2)}</td>
    <td><select onchange="_hsImp[${i}].status=this.value"><option value="done" ${r.status==="done"?"selected":""}>Completed</option><option value="inprogress" ${r.status==="inprogress"?"selected":""}>Taking now</option></select></td></tr>`).join("")}
   </tbody></table></div>
-  ${tgy&&tgy!==hgy?`<label class="row" style="margin-top:10px;gap:6px"><input type="checkbox" id="hsGY" checked>The transcript says Class of ${tgy}. Use that as my class year (currently ${hgy})</label>`:""}<label class="row" style="margin-top:6px;gap:6px"><input type="checkbox" id="hsRepl" ${fyInit().courses.length?"":"checked"}>Replace the classes I already have (otherwise new classes are added and matching ones are updated)</label>
+  ${tgy&&tgy!==hgy?`<label class="row" style="margin-top:10px;gap:6px"><input type="checkbox" id="hsGY" checked>The transcript says Class of ${tgy}. Use that as my class year (currently ${hgy})</label>`:""}<label class="row" style="margin-top:6px;gap:6px"><input type="checkbox" id="hsRepl" ${fyInit().courses.length?"":"checked"}>Replace my current classes</label>
   <div class="mfoot"><button class="btn pri" onclick="hsCommitImport()">Import ${_hsImp.length} classes</button><button class="btn" onclick="hsImport()">Back</button><span class="spacer"></span><button class="btn" onclick="closeModal()">Cancel</button></div>`)}
 function hsCommitImport(){const hs=fyInit();if(_hsImp._school&&!hs.school)hs.school=_hsImp._school;const gyb=document.getElementById("hsGY");if(gyb&&gyb.checked&&_hsImp._gradYear){hs.gradYear=_hsImp._gradYear;hs.gradSet=true;state.settings.target="Fall "+hs.gradYear;state.deadlines=fyDeadlines()}const L=_hsImp.filter(r=>r.inc&&r.title.trim());
   if(document.getElementById("hsRepl").checked)hs.courses=hs.courses.filter(c=>c.status==="planned"&&!L.some(r=>r.title.toLowerCase()===c.title.toLowerCase()));
