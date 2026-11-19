@@ -7,7 +7,7 @@ A single-file web app for planning the road to a California State University (CS
 
 Everything runs in the browser. There's no server and no account, and nothing a student enters leaves their device.
 
-**Live app:** https://cursedgrove.github.io/transfer-planner/ (once GitHub Pages is turned on)
+**Live app:** https://cursedgrove.github.io/transfer-planner/
 
 ## Transfer mode (community college → CSU/UC)
 
