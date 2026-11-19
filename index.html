@@ -3154,7 +3154,7 @@ function parseHSTranscript(txt){
 
 function hsImport(){
   modal(`<h3>Import your high school transcript</h3>
-  <p style="color:var(--sub);margin-top:-4px">Upload your unofficial transcript PDF (from Aeries, PowerSchool, Infinite Campus or your school), or open it, select all, copy and paste the text below. You'll get to check every class before anything is saved. Personal details are ignored and never saved.</p>
+  <p style="color:var(--sub);margin-top:-4px">Upload your unofficial transcript PDF or paste its text. You'll review every class before saving.</p>
   <div class="row" style="margin-bottom:10px"><label class="btn pri" style="display:inline-block">Choose transcript PDF<input type="file" accept="application/pdf,.pdf,.txt" style="display:none" onchange="hsImportFile(this)"></label><span class="dn" id="impStatus"></span></div>
   <textarea id="impText" style="min-height:180px;font-family:monospace;font-size:12px" placeholder="…or paste transcript text here"></textarea>
   <div class="mfoot"><button class="btn pri" onclick="hsPreview(document.getElementById('impText').value)">Read transcript</button><button class="btn" onclick="closeModal()">Cancel</button></div>`)}
